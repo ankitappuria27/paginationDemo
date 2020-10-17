@@ -5,8 +5,8 @@
 
 ### Run the service
 Prerequisites:
-  * MYSQL Database - "chad"
-  * MYSQL Database dump - ""
+  * MYSQL Database
+  * use MYSQL Database dump to create tables in database  - "https://github.com/ankitappuria27/paginationDemo/blob/main/dump-chad.sql"
   * Other config defined in `config.js
 
 ## Installation
