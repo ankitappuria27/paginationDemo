@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Pagination Part 1</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+</head>
+
+<body>
+    <div id="project-detail">
+        <div class="sortby-sec">
+            <label for="sortBy">Choose a sorty field:</label>
+
+            <select name="sortBy" id="sortBy">
+                <option value="recentProject">Recent Project</option>
+                <option value="username">User Name</option>
+                <option value="projectTitle">Project title</option>
+                <option value="category">Category</option>
+            </select>
+        </div>
+        <table id="project-table" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>Project title</th>
+                    <th>User name</th>
+                    <th>Category</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+
+        </table>
+        <div class="pagination-sec">
+            <div class="pagination">
+
+            </div>
+        </div>
+
+
+    </div>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('.pagination').on('click', function (event) {
+                if (event.target.classList && event.target.classList.contains('disabled')) {
+                    return;
+                }
+                var pageId = event.target.id;
+                addActiveClass(pageId);
+            });
+
+            $("#sortBy").change(function () {
+                let sortBy = $('option:selected').val();
+                initiateTable(1,sortBy);
+            });
+
+            function addActiveClass(pageId) {
+                let totalPage = $('.pagination a').length - 2;
+                if (pageId == 'next') {
+                    let currentPage = $(`.pagination a.active`).attr('id');
+                    pageId = parseInt(currentPage) + 1;
+                }
+
+                if (pageId == 'previous') {
+                    let currentPage = $(`.pagination a.active`).attr('id');
+                    pageId = parseInt(currentPage) - 1;
+                }
+
+                $(`.pagination a`).removeClass('disabled');
+                if (pageId == totalPage) {
+                    $(`#next`).addClass('disabled');
+                }
+
+                if (pageId == 1) {
+                    $(`#previous`).addClass('disabled');
+                }
+                pageId = parseInt(pageId);
+                $(`.pagination a`).removeClass('active');
+                $(`#${pageId}`).addClass('active');
+                let sortBy = $('option:selected').val();
+                if (pageId > 0 && pageId <= totalPage) {
+                    initiateTable(pageId,sortBy);
+                }
+            }
+
+            function initPagination(result) {
+                let pageHtml = `<a href="javascript:void(0)" id="previous">&laquo;</a>`;
+                for (i = 1; i <= result.totalPageNum; i++) {
+                    pageHtml = `${pageHtml}<a href="javascript:void(0)" id=${i}>${i}</a>`;
+                }
+                pageHtml = `${pageHtml}<a href="javascript:void(0)" id="next">&raquo;</a>`
+                console.log("pageHtml", pageHtml)
+                $('.pagination-sec .pagination').html(pageHtml);
+                addActiveClass(1);
+            }
+
+            function initiateTable(pageNum, sortBy) {
+                $.ajax({
+                    url: `http://localhost:3005/api/project?sortBy=${sortBy}&pageNumber=${pageNum}`,
+                    method: 'GET',
+                    success: function (result) {
+                        console.table(result);
+                        if (result.data) {
+                            let tableHtml = "";
+                            result.data.forEach((rowObj) => {
+                                tableHtml = `${tableHtml} <tr><td>${rowObj.project_title}</td><td>${rowObj.username}</td><td>${rowObj.category_name}</td></tr>`
+                            });
+
+                            $("#project-table tbody").html(tableHtml);
+
+                            if ($('.pagination-sec .pagination a').length == 0) {
+                                initPagination(result);
+                            }
+                        }
+                    }
+
+                });
+
+            }
+
+            initiateTable(1, 'recentProject');
+        });
+    </script>
+</body>
+
+</html>
