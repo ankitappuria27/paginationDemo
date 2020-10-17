@@ -10,7 +10,7 @@
 <body>
     <div id="project-detail">
         <div class="sortby-sec">
-            <label for="sortBy">Choose a sorty field:</label>
+            <label for="sortBy">Choose a sortby field:</label>
 
             <select name="sortBy" id="sortBy">
                 <option value="recentProject">Recent Project</option>
@@ -52,8 +52,7 @@
             });
 
             $("#sortBy").change(function () {
-                let sortBy = $('option:selected').val();
-                initiateTable(1,sortBy);
+                addActiveClass(1);
             });
 
             function addActiveClass(pageId) {
