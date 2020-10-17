@@ -17,7 +17,9 @@ npm install
 ```
 
 ### RUN the command
+```bash
 npm start
+```
 
 ### OUTPUT
 run https://localhost:3005 on browser
