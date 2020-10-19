@@ -40,3 +40,21 @@ a {
 #project-detail .sortby-sec{
   margin-bottom:10px;
 }
+
+#login-container {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  
+}
+
+#loginForm{
+  background: #ccc;
+  padding:20px;
+}
+
+#loginForm div{
+  margin:20px;
+}

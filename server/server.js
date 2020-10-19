@@ -9,7 +9,7 @@ function init() {
 
     mysqlDB.connectDB()
         .then(() => {
-            console.log("Connected to mysql db ******");
+            console.log('Connected to mysql db ******');
             const port = process.env.PORT || 3005;
             server.listen(port, (serverErr) => {
                 if (serverErr) {
@@ -21,7 +21,7 @@ function init() {
 
         })
         .catch((err) => {
-            console.log("err connection  mysqlDd", err);
+            console.log('err connection  mysqlDd', err);
             process.exit(1);
         });
 

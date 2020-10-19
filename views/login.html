@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+</head>
+
+<body>
+
+
+
+
+    <div id="login-container">
+        <h3>Login</h3>
+        <form id="loginForm">
+            <div>
+                <label for="usrname">Username</label>
+                <input type="text" id="username" name="usrname" required>
+            </div>
+            <div>
+                <label for="psw">Password</label>
+                <input type="password" id="password" name="psw" title="password" required>
+            </div>
+            <div>
+                <input type="submit" value="Login">
+            </div>
+        </form>
+    </div>
+
+
+
+
+    <script type="text/javascript">
+        $(function () {
+            $("#loginForm").submit(function (event) {
+                event.preventDefault();
+
+                let body = {
+                    userName: $("#username").val(),
+                    password: $("#password").val()
+                }
+                if (!body.userName) {
+                    return alert("username is required");
+
+                }
+
+                if (!body.password) {
+                    return alert("password is required");
+                }
+
+                $.ajax({
+                    url: `http://localhost:3005/api/auth/login`,
+                    method: 'POST',
+                    dataType: "json",
+                    data: JSON.stringify(body),
+                    contentType: "application/json",
+                    success: function (result) {
+                        if (result.success) {
+                            return alert(result.message);
+                        } else {
+                            return alert(result.message);
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        return alert("Error: " + XMLHttpRequest.responseJSON.message);
+                    }
+                });
+
+            });
+        });
+
+    </script>
+
+</body>
+
+</html>

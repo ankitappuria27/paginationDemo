@@ -13,20 +13,20 @@ const mysqlDB = {
             connectionStr.connect((err, sqlConnection) => {
     
                 if (err) {
-                    console.log("Error connecting DB", err);
+                    console.log('Error connecting DB', err);
                     return reject(err);
                 }
                 mySQLConnection = connectionStr;
                 return resolve(sqlConnection);
-            })
+            });
         });
     
     },
     query: (queryString) => {
         return new Promise((resolve, reject) => {
-            mySQLConnection.query(queryString, function (err, result) {
+            mySQLConnection.query(queryString, (err, result) => {
                 if (err) {
-                    return reject(err)
+                    return reject(err);
                 }
 
                 return resolve(result);
@@ -34,10 +34,10 @@ const mysqlDB = {
             });
         });
     }
-}
+};
 
 module.exports = {
     
     mysqlDB
-}
+};
 
