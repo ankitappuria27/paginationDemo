@@ -22,7 +22,7 @@ npm start
 ```
 
 ### OUTPUT
- * run https://localhost:3005 on browser
+ * run https://localhost:3005 on browser for pagination
  * run http://localhost:3005/login.html on browser for login
  
 
